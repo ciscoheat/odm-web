@@ -1,0 +1,14 @@
+-lib asynctools
+-lib dataclass
+-lib hxnodejs
+-lib js-kit
+-lib requisite
+-lib slambda
+
+-dce full
+
+-cp src 
+-main Main
+-js bin/app.js 
+
+--macro npm.Package.export('package.json')
