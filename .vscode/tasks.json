@@ -2,5 +2,12 @@
     "version": "2.0.0",
     "command": "haxe",
     "args": ["app.hxml"],
-    "problemMatcher": "$haxe"
+    "problemMatcher": "$haxe",
+    "group": {
+        "kind": "build",
+        "isDefault": true
+    },
+     "presentation": {
+        "reveal": "silent"
+    }
 }

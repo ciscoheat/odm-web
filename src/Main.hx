@@ -1,21 +1,12 @@
-import js.npm.Minimist;
-
-class Main implements Async
+class Main extends CommandLineApp
 {
-	static function start(args : Minimist, log : Log, exit : ?Dynamic -> Void) {
+	public function new() {
+		super('app');
+
 		// Your program here
 		trace(Env.NODE_ENV);
+
+		// Remember to use exit()
+		exit();
 	}
-
-	////////// Initialization //////////
-
-	static function main() CommandLineApp.init({
-		name: '',
-		argOpts: {
-			string: [],
-			boolean: [],
-			alias: []
-		},
-		cb: start
-	});	
 }
