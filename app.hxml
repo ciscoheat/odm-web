@@ -3,9 +3,7 @@
 -lib hxnodejs
 -lib js-kit
 -lib requisite
--lib slambda
-
--dce full
+-lib HaxeContracts
 
 -cp src 
 -main Main
