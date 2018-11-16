@@ -2,6 +2,7 @@
 -lib dataclass
 -lib deepstate
 -lib HaxeContracts
+-lib mithril
 
 -cp src 
 -main Main

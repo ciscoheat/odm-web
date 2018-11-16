@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    background: #f2f2f2;
+}
+  
+h1 { 
+    font-size: 14vw; 
+    color: #7d9;
+}
+
+h1.spinning {
+    color: #9a9;
+}
+
+
+.banner h1, .banner h3, .banner h6 {
+    margin: 0;
+    text-shadow: 2px 2px 6px #000;
+    text-align: center;
+}
+
+.banner {
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
