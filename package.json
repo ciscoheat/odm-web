@@ -5,15 +5,10 @@
 	"author": "",
 	"version": "0.1.0",
 	"private": true,
-	"dependencies": {
-		"winston-papertrail": "^1.0.2",
-		"winston": "^2.2.0",
-		"dotenv-safe": "^4.0.3",
-		"minimist": "^1.2.0",
-		"dotenv": "^2.0.0"
-	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "cd bin && nodemon app.js"
+	  "start": "npm-run-all -p server livereload",
+	  "server": "http-server bin -c-1 -o",
+	  "livereload": "livereload bin --port 35730 --wait 250",
+	  "tools": "npm install -g npm-run-all livereload http-server"
 	}
 }

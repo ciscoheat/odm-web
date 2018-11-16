@@ -1,7 +1,4 @@
 /bin/*.js
 /bin/*.map
-/bin/.env
-/bin/log.txt
-/bin/*-log.txt
 node_modules
 .vagrant

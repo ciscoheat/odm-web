@@ -1,5 +1,5 @@
 import js.Error;
-import js.Node;
+import js.Promise;
 
 using StringTools;
 using AsyncTools;
