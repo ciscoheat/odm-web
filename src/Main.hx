@@ -2,57 +2,57 @@ import haxe.Timer;
 import js.Browser;
 import mithril.M;
 
-typedef State = {
-	final values : ds.ImmutableArray<String>;
-	final wheelPosition : Int;
-	final spinning : Bool;
-}
-
-class CIA extends DeepState<State>
-{
-	public function new(values) {
-		super({
-			values: values,
-			wheelPosition: 0,
-			spinning: false
-		});
-	}
-
-	public function spinWheel() {
-		var value : Int = Std.random(state.values.length);
-		updateMap([
-			state.spinning => true,
-			state.wheelPosition => value
-		]);
-	}
-
-	public function wheelMoves() {
-		updateIn(state.wheelPosition, pos -> pos + 1);
-	}
-
-	public function wheelStops() {
-		updateIn(state.spinning, false);
-	}	
-}
-
 class Wheel implements Mithril
 {
-	final asset : CIA;
+	final values : ds.ImmutableArray<String>;
+	final ping = new Howl({src: ["ping.mp3"]});
+	final click = new Howl({src: ["click.mp3"]});
 
-	public function new(asset) {
-		this.asset = asset;
+	var spinning : Float = 0;
+	var wheelPosition : Int = 0;
+
+	public function new(values) {
+		this.values = values;
+	}
+
+	public function spin(totalTime : Int) {
+		var start = spinning = Timer.stamp();
+		wheelPosition = Std.random(values.length);
+
+		var randomDelay = 30;
+		var maxDelay = 800;
+
+		(function turn() {
+			if(spinning != start) return;
+
+			var diff = Timer.stamp() - start;
+			if(diff > totalTime) return stop();
+
+			var delay = (diff / totalTime) * maxDelay + Std.random(randomDelay);
+
+			wheelPosition++;
+			M.redraw();
+			click.play();
+
+			Timer.delay(turn, Std.int(delay));
+		})();
+	}
+
+	public function stop() {
+		spinning = 0;
+		ping.play();
+		M.redraw();
 	}
 
 	public function view()
 		m(".banner", 
 			m('.banner-text', 
-				m("h1", {"class": asset.state.spinning ? "spinning" : ""}, currentValue())
+				m("h1", {"class": spinning != 0 ? "spinning" : ""}, currentValue())
 			)
 		);
 
 	function currentValue() {
-		var values = asset.state.values;
-		return values[asset.state.wheelPosition % values.length];
+		return values[wheelPosition % values.length];
 	}
 }
 
@@ -64,34 +64,15 @@ extern class Howl {
 class Main
 {
 	public function new() {
-		var asset = new CIA(["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Brittiskt", "Klassisk rock", "Hårdrock"]);
+		var values = ["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"];
+		var wheel = new Wheel(values);
+		var body = Browser.document.body;
 
-		asset.subscribeToState((prev, curr) -> M.redraw());
-		M.mount(Browser.document.body, new Wheel(asset));
+		M.mount(body.querySelector('main'), wheel);
 
-		var ping = new Howl({src: ["ping.mp3"]});
-		var click = new Howl({src: ["click.mp3"]});
+		wheel.spin(8);
 
-		var totalTime = 8; // seconds, approximately
-		var minDelay = 20;
-		var maxDelay = 1000;
-		var start = Timer.stamp();
-
-		function turn() {
-			var diff = Timer.stamp() - start;
-			if(diff > totalTime) {
-				asset.wheelStops();
-				ping.play();
-				return;
-			} else {
-				var delay = (diff / totalTime) * maxDelay + minDelay;
-				asset.wheelMoves();
-				click.play();
-				Timer.delay(turn, Std.int(delay));
-			}
-		}
-		asset.spinWheel();
-		turn();
+		body.querySelector('#spin').addEventListener('click', wheel.spin.bind(8));
 	}
 
 	static function main() new Main();

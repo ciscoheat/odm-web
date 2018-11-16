@@ -3,28 +3,44 @@ html, body {
     padding: 0;
     font-family: Helvetica, Arial, sans-serif;
     background: #f2f2f2;
+
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
   
 h1 { 
     font-size: 14vw; 
     color: #7d9;
+    text-shadow: 2px 2px 6px #333;
+    text-align: center;
 }
 
 h1.spinning {
     color: #9a9;
 }
 
-
-.banner h1, .banner h3, .banner h6 {
-    margin: 0;
-    text-shadow: 2px 2px 6px #000;
-    text-align: center;
-}
-
-.banner {
-    color: white;
-    height: 100vh;
+main {
+    height: 96vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+footer {
+    height: 4vh;
+    display: flex;
+    justify-content: right;
+    align-items: center; 
+}
+
+footer img {
+    width: 30px;
+    height: 30px;
+    margin: 1vw;
+    opacity: 0.3;
+}
+
+footer img:hover {
+    opacity: 0.7;
 }
