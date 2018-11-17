@@ -27,8 +27,13 @@ main {
     align-items: center;
 }
 
+main textarea {
+    width: 50vmin;
+    height: 50vmin;
+}
+
 footer {
-    height: 4vh;
+    height: 3vh;
     display: flex;
     justify-content: right;
     align-items: center; 

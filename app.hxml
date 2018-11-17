@@ -4,6 +4,9 @@
 -lib HaxeContracts
 -lib mithril
 
+-debug
+-dce no
+
 -cp src 
 -main Main
 -js bin/app.js 
