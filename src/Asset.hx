@@ -1,48 +1,31 @@
 import ds.ImmutableArray;
 import mithril.M;
 
-typedef State = {
+typedef Wheel = {
 	final values : ImmutableArray<String>;
-	final spinStart : Float;
 	final currentPosition : Int;
+	final spinStart : Float;
 }
 
-class Asset extends DeepState<State>
-{
-	public static final current = new Asset();
-
-	public function new() {
-		super({
-			values: [],
-			spinStart: 0,
-			currentPosition: 0
-		}, [redrawMithril]);
+class Asset extends DeepState<Wheel> {
+	public function new(values) {
+		super({values: values, currentPosition: 0, spinStart: 0.0});
+		this.subscribeToState((_, _) -> M.redraw());
 	}
 
-    public function newValues(v : ImmutableArray<String>) {
-        updateIn(state.values, v);
-    }
+	public function valuesUpdated(values) {
+		updateIn(state.values, values);
+	}
 
-    public function startSpin() {
-        var newState = updateMap([
-            state.spinStart => haxe.Timer.stamp(),
-            state.currentPosition => Std.random(state.values.length)
-        ]);
-        return newState.spinStart;
-    }
+	public function wheelTurns() {
+		updateIn(state.currentPosition, pos -> pos+1);
+	}
 
-    public function stopSpin() {
-        updateIn(state.spinStart, 0);
-    }
+	public function wheelStopped() {
+		return updateIn(state.spinStart, 0.0).spinStart;
+	}
 
-    public function turnWheel() {
-        updateIn(state.currentPosition, p -> (p + 1) % state.values.length);
-    }
-
-    ///// Middleware /////
-
-	function redrawMithril(state, next, action) : State {
-		js.Browser.window.setTimeout(M.redraw, 0);
-		return next(action);
+	public function wheelStarted(time) {
+		return updateIn(state.spinStart, time).spinStart;
 	}
 }
