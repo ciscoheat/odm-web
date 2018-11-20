@@ -19,12 +19,9 @@ class Router implements Mithril
 		[
 			m('main', vnode.children),
 			m('footer', [
-				m('img#spin[src="spinning-arrows.svg"]', {
-					onclick: () -> {
-						M.routeSet.bind("/");
-						spinWheel.spin();
-					}
-				}),
+				m('a[href=/]', {oncreate: M.routeLink}, 
+					m('img#spin[src="spinning-arrows.svg"]')
+				),
 				m('img#list[src="list.svg"]', {
 					onclick: () -> {
 						var nextRoute = if(showingList) "/" else "/list";
@@ -38,7 +35,9 @@ class Router implements Mithril
 
 	public function routes() return {
 		"/": {
+			onmatch: () -> spinWheel.spin(),
 			render: _ -> m(this, spinWheel.view())
+
 		},
 		"/list": {
 			render: _ -> m(this, list.view())
@@ -90,8 +89,7 @@ class SpinWheel implements Mithril
 	public function view() {
 		m("h1", {
 			"class": asset.state.spinStart != 0.0 ? "spinning" : "",
-			onremove: stop,
-			oncreate: spin
+			onremove: stop
 		}, currentValue());
 	}
 
@@ -116,12 +114,16 @@ class TextBox implements Mithril
 		var current = Browser.getLocalStorage().getItem(localStorageKey);
 		if(current != null) {
 			var array : Array<String> = Json.parse(current);
-			if(Std.is(array, Array)) asset.valuesUpdated(array);
+			if(Std.is(array, Array)) {
+				asset.valuesUpdated(array);
+			}
 		}
 	}
 
 	function save(newValues : String) {
-		var values = newValues.trim().split("\n");
+		// Cannot trim values here because of user editing. Any empty
+		// line at the end will be removed directly. Trim in view.onremove instead.
+		var values = newValues.split("\n");
 		Browser.getLocalStorage().setItem(localStorageKey, Json.stringify(values));
 		asset.valuesUpdated(values);
 	}
@@ -129,7 +131,9 @@ class TextBox implements Mithril
 	public function view() {
 		m('textarea', {
 			oninput: M.withAttr("value", save), 
-			value: asset.state.values.join("\n")
+			value: asset.state.values.join("\n"),
+			// Trim values when exiting list
+			onremove: () -> save(asset.state.values.join("\n").trim())
 		});
 	}
 }
