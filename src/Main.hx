@@ -14,21 +14,20 @@ class Router implements Mithril
 		this.list = list;
 	}
 
-	public function view(vnode) {
-		var showingList = M.routeGet() == "/list";
+	function layout(view : Component) {
 		[
-			m('main', vnode.children),
+			m('main', m(view)),
 			m('footer', [
 				m('a[href=/]', {oncreate: M.routeLink}, 
-					m('img#spin[src="spinning-arrows.svg"]')
+					m('img[src="spinning-arrows.svg"]')
 				),
-				m('img#list[src="list.svg"]', {
-					onclick: () -> {
-						var nextRoute = if(showingList) "/" else "/list";
-						M.routeSet(nextRoute);
-					},
-					style: showingList ? {opacity: 0.7} : null
-				})
+				m('a', {
+					href: M.routeGet() == "/list" ? "/" : "/list",
+					oncreate: M.routeLink,
+					onupdate: M.routeLink
+				}, m('img[src="list.svg"]', {
+					style: M.routeGet() == "/list" ? {opacity: 0.7} : null
+				}))
 			])
 		];
 	}
@@ -36,11 +35,11 @@ class Router implements Mithril
 	public function routes() return {
 		"/": {
 			onmatch: () -> spinWheel.spin(),
-			render: _ -> m(this, spinWheel.view())
-
+			render: _ -> layout(spinWheel)
 		},
 		"/list": {
-			render: _ -> m(this, list.view())
+			onmatch: () -> spinWheel.stop(),
+			render: _ -> layout(list)
 		}
 	}
 }
@@ -82,14 +81,13 @@ class SpinWheel implements Mithril
 		})();
 	}
 
-	function stop() {
+	public function stop() {
 		asset.wheelStopped();
 	}
 
 	public function view() {
 		m("h1", {
 			"class": asset.state.spinStart != 0.0 ? "spinning" : "",
-			onremove: stop
 		}, currentValue());
 	}
 
@@ -146,18 +144,14 @@ extern class Howl {
 class Main
 {
 	public function new() {
-		var listKey = "list";
 		var defaultValues : ImmutableArray<String> = ["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"];
-		var spinTime = 8;
 
 		var asset = new Asset(defaultValues);
 
-		var list = new TextBox(asset, listKey);
+		var list = new TextBox(asset, "list");
 		var spinWheel = new SpinWheel(asset);
 
-		var router = new Router(spinWheel, list);
-
-		M.route(Browser.document.body, "/", router.routes());
+		M.route(Browser.document.body, "/", new Router(spinWheel, list).routes());
 	}
 
 	static function main() new Main();
