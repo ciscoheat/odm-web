@@ -1,4 +1,3 @@
-import ds.ImmutableArray;
 import haxe.Json;
 import haxe.Timer;
 import js.Browser;
@@ -57,6 +56,7 @@ class SpinWheel implements Mithril
 
 	public function spin() {
 		var totalTime = 8;
+
 		var start = asset.wheelStarted(Timer.stamp());
 		var randomDelay = 25;
 		var maxDelay = 800;
@@ -144,7 +144,7 @@ extern class Howl {
 class Main
 {
 	public function new() {
-		var defaultValues : ImmutableArray<String> = ["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"];
+		var defaultValues = ["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"];
 
 		var asset = new Asset(defaultValues);
 
