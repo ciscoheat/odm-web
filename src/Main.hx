@@ -3,6 +3,8 @@ import haxe.Timer;
 import js.Browser;
 import mithril.M;
 
+/////////////////////////////////////////////////////////////////////
+
 class Router implements Mithril
 {
 	final spinWheel : SpinWheel;
@@ -43,6 +45,8 @@ class Router implements Mithril
 	}
 }
 
+/////////////////////////////////////////////////////////////////////
+
 class SpinWheel implements Mithril
 {
 	static final ping = new Howl({src: ["ping.mp3"]});
@@ -56,14 +60,15 @@ class SpinWheel implements Mithril
 
 	public function spin() {
 		var totalTime = 8;
-
-		var start = asset.wheelStarted(Timer.stamp());
 		var randomDelay = 25;
 		var maxDelay = 800;
 
-		(function turn() {
+		var start = Timer.stamp();
+		asset.updateIn(asset.state.spinTime, start);
+
+		(function nextTurn() {
 			// Test if new spin started
-			if(asset.state.spinStart != start) return;
+			if(asset.state.spinTime != start) return;
 
 			var diff = Timer.stamp() - start;
 
@@ -73,21 +78,25 @@ class SpinWheel implements Mithril
 			} else {
 				var delay = (diff / totalTime) * maxDelay + Std.random(randomDelay);
 
-				asset.wheelTurns();
+				turn();
 				click.play();
 
-				Timer.delay(turn, Std.int(delay));
+				Timer.delay(nextTurn, Std.int(delay));
 			}
 		})();
 	}
 
+	function turn() {
+		asset.updateIn(asset.state.currentPosition, pos -> pos + 1);
+	}
+
 	public function stop() {
-		asset.wheelStopped();
+		asset.updateIn(asset.state.spinTime, 0.0);
 	}
 
 	public function view() {
 		m("h1", {
-			"class": asset.state.spinStart != 0.0 ? "spinning" : "",
+			"class": asset.state.spinTime != 0.0 ? "spinning" : "",
 		}, currentValue());
 	}
 
@@ -96,6 +105,8 @@ class SpinWheel implements Mithril
 		return wheel.values[wheel.currentPosition % wheel.values.length];
 	}
 }
+
+/////////////////////////////////////////////////////////////////////
 
 class TextBox implements Mithril
 {
@@ -111,9 +122,9 @@ class TextBox implements Mithril
 	function load() {
 		var current = Browser.getLocalStorage().getItem(localStorageKey);
 		if(current != null) {
-			var array : Array<String> = Json.parse(current);
-			if(Std.is(array, Array)) {
-				asset.valuesUpdated(array);
+			var values : Array<String> = Json.parse(current);
+			if(Std.is(values, Array)) {
+				asset.updateIn(asset.state.values, values);
 			}
 		}
 	}
@@ -123,7 +134,7 @@ class TextBox implements Mithril
 		// line at the end will be removed directly. Trim in view.onremove instead.
 		var values = newValues.split("\n");
 		Browser.getLocalStorage().setItem(localStorageKey, Json.stringify(values));
-		asset.valuesUpdated(values);
+		asset.updateIn(asset.state.values, values);
 	}
 
 	public function view() {
@@ -136,10 +147,14 @@ class TextBox implements Mithril
 	}
 }
 
+/////////////////////////////////////////////////////////////////////
+
 extern class Howl {
 	public function new(options : {});
 	public function play() : Void;
 }
+
+/////////////////////////////////////////////////////////////////////
 
 class Main
 {
