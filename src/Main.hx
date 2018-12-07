@@ -2,6 +2,24 @@ import haxe.Json;
 import haxe.Timer;
 import js.Browser;
 import mithril.M;
+import Asset.Container;
+
+/////////////////////////////////////////////////////////////////////
+
+class Main
+{
+	static function main() {
+
+		var defaultValues = [
+			"60-tal", "Svenskt", "Dansband", "70-tal", "Pop", 
+			"90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", 
+			"Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"
+		];
+		var asset = new Container(defaultValues);
+
+		new Router(asset, "list").enableRoutes(Browser.document.body.querySelector("#app"));
+	}
+}
 
 /////////////////////////////////////////////////////////////////////
 
@@ -10,9 +28,22 @@ class Router implements Mithril
 	final spinWheel : SpinWheel;
 	final list : TextBox;
 
-	public function new(spinWheel, list) {
-		this.spinWheel = spinWheel;
-		this.list = list;
+	public function new(asset, listStorageKey) {
+		this.list = new TextBox(asset, listStorageKey);
+		this.spinWheel = new SpinWheel(asset);
+	}
+
+	public function enableRoutes(element) {
+		M.route(element, "/", {
+			"/": {
+				onmatch: (_,_) -> {spinWheel.spin(); null;} ,
+				render: _ -> layout(spinWheel)
+			},
+			"/list": {				
+				onmatch: (_,_) -> {spinWheel.stop(); null;},
+				render: _ -> layout(list)
+			}
+		});
 	}
 
 	function layout(view : Component) {
@@ -32,17 +63,6 @@ class Router implements Mithril
 			])
 		];
 	}
-
-	public function routes() return {
-		"/": {
-			onmatch: () -> spinWheel.spin(),
-			render: _ -> layout(spinWheel)
-		},
-		"/list": {
-			onmatch: () -> spinWheel.stop(),
-			render: _ -> layout(list)
-		}
-	}
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -52,7 +72,7 @@ class SpinWheel implements Mithril
 	static final ping = new Howl({src: ["ping.mp3"]});
 	static final click = new Howl({src: ["click.mp3"]});
 
-	final asset : Asset;
+	final asset : Container;
 
 	public function new(asset) {
 		this.asset = asset;
@@ -64,11 +84,12 @@ class SpinWheel implements Mithril
 		var maxDelay = 800;
 
 		var start = Timer.stamp();
-		asset.updateIn(asset.state.spinTime, start);
+		asset.update(asset.state.spinTime, start);
 
 		(function nextTurn() {
 			// Test if new spin started
-			if(asset.state.spinTime != start) return;
+			if(asset.state.spinTime != start)
+				return;
 
 			var diff = Timer.stamp() - start;
 
@@ -87,11 +108,11 @@ class SpinWheel implements Mithril
 	}
 
 	function turn() {
-		asset.updateIn(asset.state.currentPosition, pos -> pos + 1);
+		asset.update(asset.state.currentPosition, pos -> pos + 1);
 	}
 
 	public function stop() {
-		asset.updateIn(asset.state.spinTime, 0.0);
+		asset.update(asset.state.spinTime, 0.0);
 	}
 
 	public function view() {
@@ -111,7 +132,7 @@ class SpinWheel implements Mithril
 class TextBox implements Mithril
 {
 	final localStorageKey : String;
-	final asset : Asset;
+	final asset : Container;
 
 	public function new(asset, localStorageKey : String) {
 		this.asset = asset;
@@ -124,7 +145,7 @@ class TextBox implements Mithril
 		if(current != null) {
 			var values : Array<String> = Json.parse(current);
 			if(Std.is(values, Array)) {
-				asset.updateIn(asset.state.values, values);
+				asset.update(asset.state.values, values);
 			}
 		}
 	}
@@ -134,7 +155,7 @@ class TextBox implements Mithril
 		// line at the end will be removed directly. Trim in view.onremove instead.
 		var values = newValues.split("\n");
 		Browser.getLocalStorage().setItem(localStorageKey, Json.stringify(values));
-		asset.updateIn(asset.state.values, values);
+		asset.update(asset.state.values, values);
 	}
 
 	public function view() {
@@ -152,22 +173,4 @@ class TextBox implements Mithril
 extern class Howl {
 	public function new(options : {});
 	public function play() : Void;
-}
-
-/////////////////////////////////////////////////////////////////////
-
-class Main
-{
-	public function new() {
-		var defaultValues = ["60-tal", "Svenskt", "Dansband", "70-tal", "Pop", "90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", "Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"];
-
-		var asset = new Asset(defaultValues);
-
-		var list = new TextBox(asset, "list");
-		var spinWheel = new SpinWheel(asset);
-
-		M.route(Browser.document.body, "/", new Router(spinWheel, list).routes());
-	}
-
-	static function main() new Main();
 }

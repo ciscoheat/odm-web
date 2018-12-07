@@ -10,5 +10,3 @@
 -cp src 
 -main Main
 -js bin/app.js 
-
--D deepstate-public-update
