@@ -15,9 +15,12 @@ class Main
 			"90-tal", "Reggae", "80-tal", "Disco", "Alt. rock", 
 			"Klassisk rock", "Hårdrock", "Schlager", "Soundtrack"
 		];
+		
 		var asset = new Container(defaultValues);
 
-		new Router(asset, "list").enableRoutes(Browser.document.body.querySelector("#app"));
+		new Router(asset, "list").enableRoutes(
+			Browser.document.body.querySelector("#app")
+		);
 	}
 }
 

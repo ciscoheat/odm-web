@@ -1,9 +1,9 @@
 import haxe.Json;
 import js.Browser;
-import haxe.Timer;
 import ds.ImmutableArray;
 import ds.Action;
 import mithril.M;
+
 using DateTools;
 
 /////////////////////////////////////////////////////////////////////
@@ -13,8 +13,6 @@ typedef Wheel = {
 	final currentPosition : Int;
 	final spinTime : Float;
 }
-
-/////////////////////////////////////////////////////////////////////
 
 class Asset extends DeepState<Asset, Wheel> {}
 
