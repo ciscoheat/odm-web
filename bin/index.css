@@ -7,7 +7,31 @@ html, body {
 
 #app {
     height: 100vh;
+    display: grid;
+    grid-template-rows: 5% auto 5%;
 }
+
+header {
+    background-color: #aaa;
+    display: flex;
+    align-items: center;
+}
+
+main {
+    margin-left: 1%;
+}
+
+footer {
+    background-color: #aaa;
+    display: flex;
+    align-items: center;
+}
+
+footer a {
+    padding-left: 1%;
+}
+
+/*********************************************************/
 
 #debug {
     color: rgba(250,250,250,1);
@@ -16,8 +40,4 @@ html, body {
     top: 0.4em; 
     right: 0.4em;
     background-color: rgba(0,0,0,0.35);
-}
-
-footer a {
-    padding: 1%;
 }
