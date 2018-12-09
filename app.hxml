@@ -5,7 +5,6 @@
 -lib mithril
 
 -debug
--dce no
 
 -cp src 
 -main Main

@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <link rel="stylesheet" href="index.css">
-    <style type="text/css">
-        body {
-            color: #333;
-        }
-    </style>
+    <style type="text/css"></style>
 </head>
 
 <body>
-    <div id="debug"></div>
     <div id="app"></div>
+    <div id="debug"></div>
     <script src="https://unpkg.com/mithril/mithril.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.core.min.js"></script>
     <script src="app.js"></script>
     <script>
-        if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "" || location.hostname.indexOf("192.168") == 0)
+        if (["localhost", "127.0.0.1", ""].indexOf(location.hostname) != -1)
             document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-                ':35730/livereload.js?snipver=1"></' + 'script>')
+                ':35731/livereload.js?snipver=1"></' + 'script>') // Sync port with package.json
     </script>
 </body>
 </html>

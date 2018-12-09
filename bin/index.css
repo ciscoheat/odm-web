@@ -7,10 +7,6 @@ html, body {
 
 #app {
     height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
 }
 
 #debug {
@@ -19,51 +15,9 @@ html, body {
     position: fixed;
     top: 0.4em; 
     right: 0.4em;
-    background-color: rgba(0,0,0,0.35); /* Black background with opacity */
-}
-  
-main {
-    flex-grow: 1;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(0,0,0,0.35);
 }
 
-header, main, footer {
-    flex-shrink: 0;
-}
-
-/********************************/
-
-h1 { 
-    font-size: 14vw; 
-    color: #7d9;
-    text-shadow: 2px 2px 6px #333;
-    text-align: center;
-}
-
-h1.spinning {
-    color: #9a9;
-}
-
-main textarea {
-    width: 50vw;
-    height: 70vh;
-}
-
-footer img {
-    width: 3vmin;
-    height: 3vmin;
-    margin: 1vw;
-    opacity: 0.3;
-    cursor: pointer;
-}
-
-@media only screen and (max-width: 700px) {
-/*@media only screen and (min-resolution: 200dpi) {*/
-    footer img {
-        width: 7vmin;
-        height: 7vmin;
-    }
+footer a {
+    padding: 1%;
 }

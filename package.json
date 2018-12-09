@@ -8,7 +8,7 @@
 	"scripts": {
 	  "start": "npm-run-all -p server livereload",
 	  "server": "http-server bin -c-1 -o",
-	  "livereload": "livereload bin --port 35730 --wait 250",
+	  "livereload": "livereload bin --port 35731 --wait 250",
 	  "tools": "npm install -g npm-run-all livereload http-server"
 	}
 }
