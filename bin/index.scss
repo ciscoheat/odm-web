@@ -1,0 +1,44 @@
+$bg-color: #ddd;
+
+#app {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 10% auto 10%;
+    grid-template-rows: 5% auto 5%;
+
+    header {
+        grid-column: 1 / -1;
+        background-color: $bg-color;
+        display: flex;
+        align-items: center;
+    }
+    
+    main {
+        grid-column: 2;
+        margin: 1%;
+    }
+    
+    footer {
+        grid-column: 1 / -1;
+        background-color: $bg-color;
+        display: flex;
+        align-items: center;
+    
+        a {
+            padding-left: 1%;
+        }
+    }    
+}
+
+///// Debugging /////////////////////////////////////////////////////
+
+#debug pre {
+    margin: 0;
+    color: white;
+    font-family: monospace;
+    background-color: rgba(0,0,0,0.35);
+    position: fixed;
+    padding: 0.4rem;
+    top: 0.4rem; 
+    right: 0.4rem;
+}

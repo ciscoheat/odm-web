@@ -7,15 +7,15 @@ typedef State = {
 	final name : String;
 }
 
-class Asset extends DeepState<Asset, State> {}
-
-class Container extends DeepStateContainer<Asset, State> {
+class Asset extends DeepStateContainer<State> {
 	public function new() {
-        var asset = new Asset(Asset.defaultState());
-		super(asset, [redraw]);
+        var asset = new DeepState<State>({
+            name: "Wall Enberg"
+        }, [redraw]);
+		super(asset);
 	}
 
-    function redraw(asset : Asset, next : Action -> Asset, action : Action) : Asset {
+    function redraw(asset, next : Action -> ds.gen.DeepState<State>, action) {
         var newState = next(action);
 
         M.redraw();

@@ -2,3 +2,4 @@
 /bin/*.map
 node_modules
 .vagrant
+/bin/*.css

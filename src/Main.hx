@@ -1,4 +1,4 @@
-import Asset.Container;
+import Asset;
 import js.Browser;
 import mithril.M;
 
@@ -7,8 +7,8 @@ import mithril.M;
 class Main
 {
 	static function main() {
-		var container = new Container();
-		new Router(container).enableRoutes(
+		var asset = new Asset();
+		new Router(asset).enableRoutes(
 			Browser.document.body.querySelector("#app")
 		);
 	}
@@ -18,12 +18,12 @@ class Main
 
 class Router implements Mithril
 {
-	final container : Container;
+	final asset : Asset;
 	final helloWorld : HelloWorld;
 
-	public function new(container) {
-		this.container = container;
-		this.helloWorld = new HelloWorld(container);
+	public function new(asset) {
+		this.asset = asset;
+		this.helloWorld = new HelloWorld(asset);
 	}
 
 	public function enableRoutes(element) {
@@ -41,8 +41,8 @@ class Router implements Mithril
 			m('a[href=/]', {oncreate: M.routeLink}, "Start"),
 			m('a[href]', {
 				onclick: () -> {
-					container.update(
-						container.state.name, 
+					asset.update(
+						asset.state.name =
 						["World", "Mithril", "Haxe", "DeepState"][Std.random(4)]
 					);
 					return false;
@@ -57,13 +57,14 @@ class Router implements Mithril
 
 class HelloWorld implements Mithril
 {
-	final container : Container;
+	final asset : Asset;
 
-	public function new(container) {
-		this.container = container;
+	public function new(asset) {
+		this.asset = asset;
 	}
 
-	public function view() {
-		m("h1", "Hello " + container.state.name);
-	}
+	public function view() [
+		m("h1", "Hello " + asset.state.name),
+		m("p", "Lorem ipsum?")
+	];
 }

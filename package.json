@@ -1,14 +1,13 @@
 {
-	"name": "",
+	"name": "CHANGE-THIS-NAME",
 	"license": "UNLICENSED",
 	"description": "",
 	"author": "",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-	  "start": "npm-run-all -p server livereload",
+	  "start": "npm-run-all -p server",
 	  "server": "http-server bin -c-1 -o",
-	  "livereload": "livereload bin --port 35731 --wait 250",
-	  "tools": "npm install -g npm-run-all livereload http-server"
+	  "tools": "npm install -g npm-run-all http-server"
 	}
 }
