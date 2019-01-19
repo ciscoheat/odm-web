@@ -1,0 +1,11 @@
+-lib deepstate
+-lib mithril
+
+-debug
+-dce full
+
+-cp src/common
+-cp src/client
+
+-main Client
+-js bin/client.js

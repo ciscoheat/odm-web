@@ -3,15 +3,18 @@ import haxe.Json;
 import ds.Action;
 import mithril.M;
 
+using StringTools;
+
 typedef State = {
-	final name : String;
+	final events : ds.ImmutableArray<Event>;
 }
 
 class Asset extends DeepStateContainer<State> {
 	public function new() {
         var asset = new DeepState<State>({
-            name: "Wall Enberg"
+            events: []
         }, [redraw]);
+
 		super(asset);
 	}
 

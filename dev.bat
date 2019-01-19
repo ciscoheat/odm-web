@@ -1,0 +1,1 @@
+@http-server bin -o -c-1

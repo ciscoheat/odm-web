@@ -1,33 +1,35 @@
-$bg-color: #ddd;
+body {
+    font-family: 'Merriweather Sans', sans-serif;
+}
 
-#app {
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 10% auto 10%;
-    grid-template-rows: 5% auto 5%;
+#client {
+    #logo {
+        width: 10%;
+        height: 10%;
+        margin: 1rem;
+    }
 
-    header {
-        grid-column: 1 / -1;
-        background-color: $bg-color;
-        display: flex;
-        align-items: center;
-    }
-    
-    main {
-        grid-column: 2;
-        margin: 1%;
-    }
-    
-    footer {
-        grid-column: 1 / -1;
-        background-color: $bg-color;
-        display: flex;
-        align-items: center;
-    
-        a {
-            padding-left: 1%;
+    article {
+        border: 2px solid #C3CFD9;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+
+        time {
+            font-size: 90%;
         }
-    }    
+
+        h2 {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    h2 {
+        margin: 1rem 0;
+    }
 }
 
 ///// Debugging /////////////////////////////////////////////////////
