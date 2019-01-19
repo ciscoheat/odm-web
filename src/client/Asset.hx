@@ -10,9 +10,9 @@ typedef State = {
 }
 
 class Asset extends DeepStateContainer<State> {
-	public function new() {
+	public function new(events) {
         var asset = new DeepState<State>({
-            events: []
+            events: events
         }, [redraw]);
 
 		super(asset);
@@ -20,12 +20,7 @@ class Asset extends DeepStateContainer<State> {
 
     function redraw(asset, next : Action -> ds.gen.DeepState<State>, action) {
         var newState = next(action);
-
         M.redraw();
-
-        var debugData = Json.stringify(newState.state, null, "  ").trim();
-        Browser.document.getElementById("debug").innerHTML = '<pre>$debugData</pre>';
-
         return newState;
     }
 }

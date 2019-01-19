@@ -1,3 +1,5 @@
 /bin/*.js
 /bin/*.map
 /bin/*.css
+/bin/lib
+/bin/*.php

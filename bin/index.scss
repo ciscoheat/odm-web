@@ -1,8 +1,6 @@
-body {
-    font-family: 'Merriweather Sans', sans-serif;
-}
-
 #client {
+    font-family: 'Merriweather Sans', sans-serif;
+
     #logo {
         width: 10%;
         height: 10%;
@@ -18,7 +16,7 @@ body {
             font-size: 90%;
         }
 
-        h2 {
+        h3 {
             margin: 0;
         }
 
@@ -30,17 +28,4 @@ body {
     h2 {
         margin: 1rem 0;
     }
-}
-
-///// Debugging /////////////////////////////////////////////////////
-
-#debug pre {
-    margin: 0;
-    color: white;
-    font-family: monospace;
-    background-color: rgba(0,0,0,0.35);
-    position: fixed;
-    padding: 0.4rem;
-    top: 0.4rem; 
-    right: 0.4rem;
 }

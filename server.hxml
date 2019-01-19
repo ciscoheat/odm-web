@@ -1,0 +1,10 @@
+-lib deepstate
+
+-debug
+-dce full
+
+-cp src/common
+-cp src/server
+
+-main Server
+-php bin
