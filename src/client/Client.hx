@@ -11,12 +11,16 @@ using DateTools;
 class Client
 {
 	static function main() {
-		var url = 'http://localhost:8081';
+		var url = 'http://localhost:8081/events';
+		var asset = new Asset([]);
+
+		new Router(
+			asset,
+			Browser.document.body.querySelector("#client")
+		);
+
 		M.request(url).then(events -> {
-			new Router(
-				new Asset(events), 
-				Browser.document.body.querySelector("#client")
-			);
+			asset.update(asset.state.events = events);
 		});
 	}
 }
@@ -32,10 +36,7 @@ class Router implements Mithril
 
 		M.route(element, "/", {
 			"/": {
-				render: _ -> {
-					trace("New EventList");
-					layout(new EventList(asset.state.events));
-				}
+				render: _ -> layout(new EventList(asset.state.events))
 			}
 		});
 	}
@@ -65,7 +66,7 @@ private class EventList implements Mithril
 	function eventView(e : Event)
 		m('article', [
 			m('time', Date.fromTime(e.time).format("%Y-%m-%d")),
-			m('h3', e.name),
-			m('a', {href: e.link, target: "_blank"}, "RSVP here")
+			m('h3', e.name),			
+			m('a', {href: e.link, target: "_blank"}, e.status == Upcoming ? "RSVP here" : "More info")
 		]);
 }

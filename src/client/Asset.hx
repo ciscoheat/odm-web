@@ -1,9 +1,5 @@
-import js.Browser;
-import haxe.Json;
 import ds.Action;
 import mithril.M;
-
-using StringTools;
 
 typedef State = {
 	final events : ds.ImmutableArray<Event>;
