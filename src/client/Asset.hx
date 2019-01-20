@@ -16,6 +16,7 @@ class Asset extends DeepStateContainer<State> {
 
     function redraw(asset, next : Action -> ds.gen.DeepState<State>, action) {
         var newState = next(action);
+        trace(action.type);
         M.redraw();
         return newState;
     }

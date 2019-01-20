@@ -1,6 +1,3 @@
-import Asset;
-import js.Browser;
-import js.Promise;
 import mithril.M;
 import ds.ImmutableArray;
 
@@ -11,15 +8,12 @@ using DateTools;
 class Client
 {
 	static function main() {
-		var url = 'http://localhost:8081/events';
 		var asset = new Asset([]);
+		var eventUrl = 'http://localhost:8081/events';
 
-		new Router(
-			asset,
-			Browser.document.body.querySelector("#client")
-		);
+		new Router(asset, js.Browser.document.querySelector("#client"));
 
-		M.request(url).then(events -> {
+		M.request(eventUrl).then(events -> {
 			asset.update(asset.state.events = events);
 		});
 	}
@@ -27,7 +21,7 @@ class Client
 
 /////////////////////////////////////////////////////////////////////
 
-class Router implements Mithril
+private class Router implements Mithril
 {
 	final asset : Asset;
 
@@ -41,7 +35,7 @@ class Router implements Mithril
 		});
 	}
 
-	function layout(view : Component) 
+	function layout(view) 
 		m('.flex-vertical.flex-center', m('.container', [
 			m('header.flex-center', m('img[src=logo.png]#logo')),
 			m(view)

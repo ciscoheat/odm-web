@@ -3,3 +3,4 @@
 /bin/*.css
 /bin/lib
 /bin/*.php
+/.env
