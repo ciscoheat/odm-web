@@ -2,7 +2,7 @@ import ds.Action;
 import mithril.M;
 
 typedef State = {
-	final events : ds.ImmutableArray<Event>;
+	final events : ds.ImmutableArray<MeetupEvent>;
 }
 
 class Asset extends DeepStateContainer<State> {

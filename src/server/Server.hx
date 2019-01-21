@@ -21,7 +21,7 @@ class Server
 				var apiKey = DotEnv.get("MEETUP_API_KEY");
 				var url = 'https://api.meetup.com/ovik-dev/events?sign=true&photo-host=public&status=past,upcoming&key=$apiKey&desc=true';
 				var data = Http.requestUrl(url);
-				var allEvents : ds.ImmutableArray<Event> = cast Json.parse(data);
+				var allEvents : ds.ImmutableArray<MeetupEvent> = cast Json.parse(data);
 
 				// Date filtering
 				var dateLimit = paths.length == 3 ? Date.fromString(paths[2]).getTime()	: 0;

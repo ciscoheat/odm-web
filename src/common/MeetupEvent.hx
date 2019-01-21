@@ -4,7 +4,7 @@
     var Past = "past";
 }
 
-typedef Event = {
+typedef MeetupEvent = {
     final id : String;
     final time : Float;
     final link : String;

@@ -46,7 +46,7 @@ private class Router implements Mithril
 
 private class EventList implements Mithril
 {
-	final events : ImmutableArray<Event>;
+	final events : ImmutableArray<MeetupEvent>;
 
 	public function new(events)
 		this.events = events;
@@ -57,7 +57,7 @@ private class EventList implements Mithril
 		events.filter(e -> e.status == Past).map(eventView)
 	];
 
-	function eventView(e : Event)
+	function eventView(e : MeetupEvent)
 		m('article', [
 			m('time', Date.fromTime(e.time).format("%Y-%m-%d")),
 			m('h3', e.name),			
