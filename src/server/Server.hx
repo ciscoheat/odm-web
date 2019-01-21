@@ -10,9 +10,12 @@ class Server
 
 	static function main() {
 		var pathInfo : String = SERVER["PATH_INFO"];
-		var paths = pathInfo == null ? [] : pathInfo.split("/").filter(p -> p.length > 0);
+		var paths = pathInfo == null ? [] : pathInfo.split("/").filter(p -> p.length > 0);		
 
-		switch paths {
+		try switch paths {
+			case ['crash']:
+				throw "You crashed on purpose!";
+
 			case ['macro']:
 				trace(DotEnv.get("MEETUP_API_KEY"));
 
@@ -33,6 +36,13 @@ class Server
 
 			case _:
 				Web.setReturnCode(404);
+		}
+		catch(e : Dynamic) {
+			Web.setReturnCode(500);
+			Lib.print('<h1>Internal server error</h1>');
+			Lib.print('<pre>');
+			Lib.dump(e);
+			Lib.print('</pre>');
 		}
 	}
 
