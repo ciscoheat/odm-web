@@ -6,10 +6,10 @@ import haxe.Http;
 
 class Server
 {
-	static final serverVars = Lib.hashOfAssociativeArray(SuperGlobal._SERVER);
+	static final SERVER = Lib.hashOfAssociativeArray(SuperGlobal._SERVER);
 
 	static function main() {
-		var pathInfo : String = serverVars.get("PATH_INFO");
+		var pathInfo : String = SERVER["PATH_INFO"];
 		var paths = pathInfo == null ? [] : pathInfo.split("/").filter(p -> p.length > 0);
 
 		switch paths {
