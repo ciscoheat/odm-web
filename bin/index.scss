@@ -1,27 +1,31 @@
 #client {
     font-family: 'Merriweather Sans', sans-serif;
 
-    #logo {
-        width: 10%;
-        height: 10%;
-        margin: 1rem;
-    }
-
-    article {
-        border: 2px solid #C3CFD9;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-
-        h3 {
-            margin: 0;
-        }
-
-        a {
-            text-decoration: underline;
+    header {
+        #logo {
+            width: 10%;
+            height: 10%;
+            margin: 1rem;
         }
     }
 
-    h2 {
-        margin: 1rem 0;
+    main {
+        article {
+            border: 2px solid #C3CFD9;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+
+            h3 {
+                margin: 0;
+            }
+
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        h2 {
+            margin: 1rem 0;
+        }
     }
 }

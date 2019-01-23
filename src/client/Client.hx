@@ -3,8 +3,6 @@ import ds.ImmutableArray;
 
 using DateTools;
 
-/////////////////////////////////////////////////////////////////////
-
 class Client
 {
 	static function main() {
@@ -19,8 +17,7 @@ class Client
 	}
 }
 
-/////////////////////////////////////////////////////////////////////
-
+// Controller + View
 private class Router implements Mithril
 {
 	final asset : Asset;
@@ -38,12 +35,11 @@ private class Router implements Mithril
 	function layout(view) 
 		m('.flex-vertical.flex-center', m('.container', [
 			m('header.flex-center', m('img[src=logo.png]#logo')),
-			m(view)
+			m('main', m(view))
 		]));
 }
 
-/////////////////////////////////////////////////////////////////////
-
+// View
 private class EventList implements Mithril
 {
 	final events : ImmutableArray<MeetupEvent>;
