@@ -21,8 +21,8 @@ class Client
 	}
 }
 
-// Controller + View
-private class Router implements Mithril
+// Controller
+private class Router
 {
 	final asset : Asset;
 	final layout : Layout;
