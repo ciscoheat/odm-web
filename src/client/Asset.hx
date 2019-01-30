@@ -1,4 +1,3 @@
-import ds.Action;
 import mithril.M;
 
 typedef State = {
@@ -14,7 +13,7 @@ class Asset extends DeepStateContainer<State> {
 		super(asset);
 	}
 
-    function redraw(asset, next : Action -> ds.gen.DeepState<State>, action) {
+    function redraw(asset, next : ds.Action -> ds.gen.DeepState<State>, action) {
         var newState = next(action);
         trace(action.type);
         M.redraw();

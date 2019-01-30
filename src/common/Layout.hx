@@ -1,6 +1,6 @@
 import mithril.M;
 
-// (Controller +) View
+// View
 class Layout implements Mithril
 {
 	public function new() {}
