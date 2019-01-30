@@ -1,4 +1,5 @@
 -lib deepstate
+-lib mithril
 
 -debug
 -dce full
