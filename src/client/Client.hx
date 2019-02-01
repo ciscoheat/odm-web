@@ -1,14 +1,18 @@
 import haxe.Timer;
 import mithril.M;
+import js.Browser;
 
 class Client
 {
 	static function main() {
+		var element = Browser.document.querySelector("#client");
+
+		//M.mount(element, new HelloWorld());
+
 		var asset = new Asset([]);
+		new Router(asset).start(element);
+
 		var eventUrl = 'http://localhost:8081/events';
-
-		new Router(asset).start(js.Browser.document.querySelector("#client"));
-
 		M.request(eventUrl).then(events -> {
 			asset.update(asset.state.events = events);
 		});
@@ -19,6 +23,14 @@ class Client
 		}, 2000);
 		*/
 	}
+}
+
+class HelloWorld implements Mithril
+{
+	public function new() {}
+
+	public function view() 
+		m('h1', "Hello World!");
 }
 
 // Controller
