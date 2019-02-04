@@ -14,22 +14,18 @@ class Server
 	static function main() {
 		var meetup = new MeetupApi("ovik-dev");
 
-		var paths = {
+		var path = {
 			var pathInfo : String = SERVER["PATH_INFO"];
 			pathInfo == null ? [] : pathInfo.split("/").filter(p -> p.length > 0);
 		}
 
-		try switch paths {
-			case []:
-				var layout = new Layout();
-				var html = File.getContent("index.html");
-				var eventList = new EventList(meetup.events());
-				var content = new MithrilNodeRender("  ").render(layout.layout(eventList));
-				
-				outputHtml(html
-					.replace('<div id="client"></div>', '<div id="client">\n$content\n</div>')
-					.replace('<script src="client.js"></script>', '')
-				);
+		try switch path {
+			case ['events']:
+				outputJson(meetup.events());
+
+			case ['events', 'after', afterDate]:
+				var dateLimit = Date.fromString(afterDate).getTime();
+				outputJson(meetup.events(dateLimit));
 
 			case ['crash']:
 				throw "You crashed on purpose!";
@@ -37,11 +33,17 @@ class Server
 			case ['macro']:
 				trace(DotEnv.get("MEETUP_API_KEY"));
 
-			case ['events']:
-				outputJson(meetup.events());
-
-			case ['events', 'after', _]:
-				outputJson(meetup.events(paths[2]));
+			case []:
+				var template = File.getContent("index.html");
+				var eventList = new EventList(meetup.events());
+				
+				var layout = new Layout();
+				var content = new MithrilNodeRender("  ").render(layout.layout(eventList));
+				
+				outputHtml(template
+					.replace('<div id="client"></div>', '<div id="client">\n$content\n</div>')
+					.replace('<script src="client.js"></script>', '')
+				);
 
 			case _:
 				Web.setReturnCode(404);

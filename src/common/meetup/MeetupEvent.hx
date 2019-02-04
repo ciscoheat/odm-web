@@ -1,3 +1,4 @@
+package meetup;
 
 @:enum abstract EventStatus(String) from String {
     var Upcoming = "upcoming";

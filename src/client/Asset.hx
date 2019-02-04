@@ -1,4 +1,5 @@
 import mithril.M;
+import meetup.MeetupEvent;
 
 typedef State = {
 	final events : ds.ImmutableArray<MeetupEvent>;

@@ -1,5 +1,6 @@
 import mithril.M;
 import ds.ImmutableArray;
+import meetup.MeetupEvent;
 
 using DateTools;
 

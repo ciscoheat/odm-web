@@ -1,5 +1,6 @@
 import haxe.Json;
 import haxe.Http;
+import meetup.MeetupEvent;
 
 class MeetupApi
 {
@@ -9,7 +10,7 @@ class MeetupApi
         this.group = group;
     }
 
-	public function events(datelimit = "") {
+	public function events(timestampFrom = 0.0) {
 		var apiKey = DotEnv.get("MEETUP_API_KEY");
 		var url = 'https://api.meetup.com/$group/events?sign=true&photo-host=public&status=past,upcoming&key=$apiKey&desc=true';
 		var data = Http.requestUrl(url);
@@ -17,14 +18,7 @@ class MeetupApi
 		var allEvents : ds.ImmutableArray<MeetupEvent> = cast Json.parse(data);
 
 		// Date filtering
-		var dateLimit = datelimit.length > 0 
-			? Date.fromString(datelimit).getTime() 
-			: 0;
-
-		var displayEvents = dateLimit > 0
-			? allEvents.filter(e -> e.time > dateLimit)
-			: allEvents;
-
+		var displayEvents = allEvents.filter(e -> e.time >= timestampFrom);
 		return displayEvents;
 	}
 }
