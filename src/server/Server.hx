@@ -57,11 +57,11 @@ class Server
 		}
 	}
 
-	static function outputHtml(html : String) {
+	static inline function outputHtml(html : String) {
 		Lib.print(html);
 	}
 
-	static function outputJson(data : Dynamic) {
+	static inline function outputJson(data : Dynamic) {
 		Web.setHeader("Content-type", "application/json");
 		Web.setHeader("Access-Control-Allow-Origin", "*");
 		Lib.print(Json.stringify(data));
