@@ -18,9 +18,22 @@ class Client
 		});
 
 		/*
-		Timer.delay(() -> {
-			asset.update(asset.state.events[0].name = "Super full stack Haxe magic!", "Mega update");
-		}, 2000);
+		function updateTitle() {
+			var names = [
+				"Short End of the Stick",
+				"If You Can't Stand the Heat, Get Out of the Kitchen",
+				"What Goes Up Must Come Down",
+				"Money Doesn't Grow On Trees",
+				"Don't Count Your Chickens Before They Hatch"
+			];
+			var randomName = names[Std.random(names.length)];
+			var index = Std.random(asset.state.events.length);
+
+			asset.update(asset.state.events[index].name = randomName, "NewTitle");
+		}
+
+		var t = new Timer(100);
+		t.run = updateTitle;
 		*/
 	}
 }

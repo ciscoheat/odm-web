@@ -7,6 +7,7 @@ using DateTools;
 // View
 class EventList implements Mithril
 {
+	// Model
 	final events : ImmutableArray<MeetupEvent>;
 
 	public function new(events)
