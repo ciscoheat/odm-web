@@ -13,6 +13,9 @@
         <div id="client"></div>
         <script src="https://unpkg.com/mithril/mithril.js"></script>
         <script src="client.js"></script>
-        <script src="https://ciscoheat.github.io/cdn/js/live.js"></script>
+        <script>
+            if (["localhost", "127.0.0.1", ""].indexOf(location.hostname) != -1)
+                document.write('<script src="https://ciscoheat.github.io/cdn/js/live.js"></' + 'script>')
+        </script>
     </body>
 </html>

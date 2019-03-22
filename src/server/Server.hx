@@ -4,6 +4,7 @@ import php.SuperGlobal;
 import php.Lib;
 import php.Web;
 import haxe.Json;
+import tools.DotEnv;
 
 using StringTools;
 
