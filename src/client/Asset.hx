@@ -7,16 +7,16 @@ typedef State = {
 
 class Asset extends DeepStateContainer<State> {
 	public function new(events) {
-        var asset = new DeepState<State>({
-            events: events
-        }, [redraw]);
-
+		var state = {
+			events: events
+		};
+		var asset = new DeepState<State>(state, [redraw]);
+		
 		super(asset);
 	}
 
     function redraw(asset, next : ds.Action -> ds.gen.DeepState<State>, action) {
         var newState = next(action);
-        trace(action.type);
         M.redraw();
         return newState;
     }
