@@ -31,9 +31,6 @@ class Server
 			case ['crash']:
 				throw "You crashed on purpose!";
 
-			case ['macro']:
-				trace(DotEnv.get("MEETUP_API_KEY"));
-
 			case []:
 				var template = File.getContent("index.html");
 				var eventList = new EventList(meetup.events());
